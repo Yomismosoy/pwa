@@ -1,8 +1,9 @@
+/* Service Worker */
 var cacheName = 'weatherPWA-step-6-1';
 var dataCacheName = 'weatherData-v1';
-//var filesToCache = [];
+/*var filesToCache = [];*/
 var filesToCache = [
-  '/',
+'/',
   '/index.html',
   '/scripts/app.js',
   '/styles/inline.css',
@@ -19,10 +20,11 @@ var filesToCache = [
   '/images/snow.png',
   '/images/thunderstorm.png',
   '/images/wind.png'
-];
+  ];
 
 self.addEventListener('install', function(e) {
   console.log('[ServiceWorker] Install');
+  //debugger;
   e.waitUntil(
     caches.open(cacheName).then(function(cache) {
       console.log('[ServiceWorker] Caching app shell');
@@ -83,3 +85,47 @@ self.addEventListener('fetch', function(e) {
     );
   }
 });
+/* mensajes de prueba*/
+self.addEventListener('push', function(event) {  
+  var title = 'Yay a message.';  
+  var body = 'We have received a push message.';  
+  var icon = '/images/smiley.svg';  
+  var tag = 'simple-push-example-tag';
+  event.waitUntil(  
+    self.registration.showNotification(title, {  
+      body: body,  
+      icon: icon,  
+      tag: tag  
+    })  
+  );  
+})
+	
+      /*
+       * Check if the service worker has already cached this city's weather
+       * data. If the service worker has the data, then display the cached
+       * data while the app fetches the latest data.
+       */	
+/*if ('caches' in window) {
+
+      caches.match(url).then(function(response) {
+        if (response) {
+          response.json().then(function updateFromCache(json) {
+            var results = json.query.results;
+            results.key = key;
+            results.label = label;
+            results.created = json.query.created;
+            app.updateForecastCard(results);
+          });
+        }
+      });
+    }*/
+/* Determina si los datos son los mas recientes */
+/*var cardLastUpdatedElem = card.querySelector('.card-last-updated');
+    var cardLastUpdated = cardLastUpdatedElem.textContent;
+    if (cardLastUpdated) {
+      cardLastUpdated = new Date(cardLastUpdated);
+      // Bail if the card has more recent data then the data
+      if (dataLastUpdated.getTime() < cardLastUpdated.getTime()) {
+        return;
+      }
+    }*/
